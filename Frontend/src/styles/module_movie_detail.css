@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* Contenedor principal */
+.movie-detail {
+  max-width: 700px; /* Un poco más ancho */
+  margin: 3rem auto; /* Margen vertical y centrado horizontal */
+  /* El fondo y sombra principal estarán en la tarjeta */
+}
+
+/* Tarjeta de película */
+.movie-card {
+  padding: 2.5rem; /* Más padding interno */
+  background: linear-gradient(145deg, #2a2a2a, #1e1e1e); /* Gradiente sutil */
+  border-radius: 15px; /* Bordes más redondeados */
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada y suave */
+  text-align: left; /* Alineación a la izquierda para mejor lectura */
+  overflow: hidden; /* Asegura que nada se salga de los bordes redondeados */
+}
+
+.movie-card h1 {
+  margin-bottom: 1rem;
+  font-size: 2.2rem; /* Tamaño de fuente más grande */
+  color: #f0c419; /* Un amarillo dorado más vibrante */
+  font-weight: 700; /* Más peso para el título */
+  line-height: 1.2;
+  letter-spacing: 0.5px; /* Espaciado ligero */
+}
+
+.description {
+  font-size: 1rem; /* Ligeramente más grande */
+  opacity: 0.85; /* Un poco menos transparente */
+  margin-bottom: 2rem; /* Más espacio debajo */
+  color: #bdbdbd; /* Gris claro específico */
+}
+
+/* Información de la película */
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Más espacio entre elementos */
+  font-size: 0.95rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Línea divisora sutil */
+}
+
+.movie-info p {
+  /* Quitamos el fondo individual, limpiamos el look */
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  margin: 0; /* Reseteo de margen */
+}
+
+/* Opcional: Estilo para destacar etiquetas si usas <strong> o <span> */
+.movie-info p strong {
+  color: #f0c419; /* Usa el color de acento para etiquetas */
+  margin-right: 0.5em;
+  display: inline-block;
+  min-width: 80px; /* Ayuda a alinear visualmente los valores */
+  font-weight: 600;
+}
+
+/* Estilo base para botones */
+.button-base { /* Clase base opcional o aplicar a ambos botones */
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 8px; /* Bordes redondeados */
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transición suave para todo */
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+.button-base:hover {
+  transform: translateY(-3px); /* Efecto de elevación */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el ratón */
+}
+
+.button-base:active {
+  transform: translateY(-1px); /* Efecto de presión */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón de rentar (Primario) */
+.rent-button {
+  /* Hereda de .button-base si lo usas, o copia los estilos */
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  color: #121212; /* Texto oscuro para contraste */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  background: linear-gradient(45deg, #f0c419, #e0ac00); /* Gradiente amarillo/dorado */
+  box-shadow: 0 4px 15px rgba(240, 196, 25, 0.3); /* Sombra con color de acento */
+}
+
+.rent-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(240, 196, 25, 0.4);
+  filter: brightness(1.1); /* Hacerlo un poco más brillante */
+}
+
+.rent-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 10px rgba(240, 196, 25, 0.3);
+  filter: brightness(0.9);
+}
+
+/* Botón de retroceso (Secundario) */
+.back-button {
+  /* Hereda de .button-base si lo usas, o copia los estilos */
+  display: inline-block;
+  padding: 0.7rem 1.5rem; /* Ligeramente más pequeño */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil en lugar de fondo sólido */
+  border-radius: 8px;
+  color: #e0e0e0; /* Color de texto claro */
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  background: transparent; /* Fondo transparente */
+  margin-bottom: 1.5rem; /* Margen inferior */
+  margin-top: 0; /* Sin margen superior si está antes del título */
+  margin-right: 1rem; /* Espacio si hay otros botones */
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.1); /* Fondo muy sutil al pasar el ratón */
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px); /* Efecto sutil */
+}
+
+.back-button:active {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(0px);
+}
+
+/* Indicadores de carga y error */
+.loading, .error {
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  font-weight: 500;
+}
+
+.loading {
+  color: #6bbdff; /* Azul más brillante */
+  background-color: rgba(107, 189, 255, 0.1);
+  border: 1px solid rgba(107, 189, 255, 0.2);
+}
+
+.error {
+  color: #ff6b6b; /* Rojo más brillante */
+  background-color: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}

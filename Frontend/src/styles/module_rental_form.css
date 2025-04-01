@@ -1,0 +1,100 @@
+/* Asegúrate de que la fuente Poppins esté importada */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Contenedor principal del formulario */
+.rental-form {
+  max-width: 480px; /* Ligeramente más ancho para comodidad */
+  margin: 3rem auto; /* Margen estándar y centrado */
+  padding: 2.5rem; /* Padding interno generoso */
+  background: linear-gradient(145deg, #2c2c2c, #202020); /* Gradiente de tarjeta */
+  color: #e0e0e0; /* Color de texto suave */
+  border-radius: 15px; /* Radio de borde estándar */
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); /* Sombra suave estándar */
+  text-align: left; /* Alineación a la izquierda para campos de formulario */
+}
+
+.rental-form h2 {
+  margin-bottom: 2rem; /* Más espacio debajo del título */
+  font-size: 1.8rem; /* Tamaño de título ajustado */
+  color: #f0c419; /* Color de acento estándar */
+  font-weight: 700; /* Peso de fuente estándar para títulos */
+  text-align: center; /* Centramos el título principal */
+}
+
+/* Etiquetas */
+.rental-form label {
+  display: block;
+  margin: 1rem 0 0.5rem; /* Espaciado ajustado */
+  font-size: 0.95rem; /* Tamaño de fuente legible */
+  font-weight: 600; /* Peso para destacar la etiqueta */
+  color: #bdbdbd; /* Color grisáceo para etiquetas */
+}
+
+/* Campos de entrada */
+.rental-form input {
+  width: 100%;
+  padding: 0.9rem 1.2rem; /* Padding interno cómodo */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+  border-radius: 8px; /* Radio estándar para elementos internos */
+  background-color: #2a2a2a; /* Fondo oscuro estándar para inputs */
+  color: #e0e0e0; /* Color de texto */
+  font-size: 1rem; /* Tamaño de fuente estándar */
+  box-sizing: border-box; /* Asegura que padding/border no aumenten el tamaño total */
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rental-form input:focus {
+  border-color: #f0c419; /* Color de acento al enfocar */
+  box-shadow: 0 0 0 3px rgba(240, 196, 25, 0.15); /* Resplandor sutil */
+}
+
+/* Botón de confirmación (estilo primario) */
+.rental-form button {
+  display: block; /* Para que ocupe el ancho completo */
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  margin-top: 2rem; /* Espacio sobre el botón */
+  padding: 0.9rem 1.8rem; /* Padding (vertical igual al input) */
+  background: linear-gradient(45deg, #f0c419, #e0ac00); /* Gradiente amarillo */
+  border: none;
+  border-radius: 8px;
+  color: #121212; /* Texto oscuro para contraste */
+  font-size: 1.05rem; /* Ligeramente más grande */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(240, 196, 25, 0.2); /* Sombra de color */
+}
+
+.rental-form button:not(:disabled):hover { /* Hover solo si no está deshabilitado */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(240, 196, 25, 0.3);
+  filter: brightness(1.1);
+}
+
+.rental-form button:not(:disabled):active { /* Active solo si no está deshabilitado */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 10px rgba(240, 196, 25, 0.2);
+  filter: brightness(0.9);
+}
+
+/* Estilo para botón deshabilitado */
+.rental-form button:disabled {
+  background: linear-gradient(45deg, #777, #555); /* Gradiente gris */
+  color: #aaa; /* Color de texto apagado */
+  box-shadow: none; /* Sin sombra */
+  cursor: not-allowed;
+  opacity: 0.7; /* Ligeramente transparente */
+}
+
+/* Mensaje de error (estilo moderno) */
+.error {
+  color: #ff6b6b; /* Rojo brillante */
+  background-color: rgba(255, 107, 107, 0.1); /* Fondo sutil */
+  border: 1px solid rgba(255, 107, 107, 0.2); /* Borde sutil */
+  padding: 0.8rem 1rem; /* Padding interno */
+  border-radius: 8px; /* Bordes redondeados */
+  margin-top: 1.5rem; /* Espacio sobre el mensaje */
+  font-size: 0.9rem;
+  text-align: center; /* Centrado */
+}

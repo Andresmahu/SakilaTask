@@ -1,0 +1,272 @@
+/* Reseteo básico y fuente Poppins */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* --- MODIFICADO: Body ahora centra el contenido --- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212; /* Fondo oscuro estándar */
+  color: #e0e0e0; /* Texto claro estándar */
+  line-height: 1.6;
+  display: flex; /* AÑADIDO: Habilita Flexbox */
+  justify-content: center; /* AÑADIDO: Centra horizontalmente */
+  align-items: center; /* AÑADIDO: Centra verticalmente */
+  min-height: 100vh; /* AÑADIDO: Asegura altura mínima para centrado vertical */
+  padding: 2rem; /* AÑADIDO: Espacio alrededor del contenedor principal */
+}
+
+/* Contenedor principal del Login */
+.login-main {
+  display: flex;
+  /* height: 100%; */ /* MODIFICADO: Eliminado, el body se encarga */
+  max-width: 1100px; /* MODIFICADO: Ajustado ligeramente (opcional) */
+  width: 100%; /* AÑADIDO: Para que respete max-width y sea responsive */
+  /* MODIFICADO: Fondo, sombra y radio consistentes */
+  background: linear-gradient(145deg, #2c2c2c, #202020);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Sección Izquierda (Imagen) */
+.login-left {
+  flex: 1; /* MODIFICADO: Ocupa espacio flexible */
+  /* background-color: #f4f4f4; */ /* MODIFICADO: Eliminado, hereda fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 3rem; /* AÑADIDO: Espacio interno */
+}
+
+.login-left img {
+  width: 100%;
+  max-width: 400px; /* MODIFICADO: Ajustado */
+  border-radius: 10px;
+  /* MODIFICADO: Sombra más sutil para tema oscuro */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Sección Derecha (Formulario) */
+.login-right {
+  flex: 1; /* MODIFICADO: Ocupa espacio flexible */
+  /* background-color: #fff; */ /* MODIFICADO: Eliminado, hereda fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem; /* AÑADIDO: Espacio interno */
+}
+
+.login-right-container {
+  width: 100%; /* MODIFICADO: Ocupa todo el espacio del padre */
+  max-width: 420px; /* MODIFICADO: Ligeramente más ancho */
+  /* margin: 0 auto; */ /* MODIFICADO: No necesario si .login-right centra */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+
+/* Sección central del formulario */
+.login-center {
+  text-align: center;
+  margin-bottom: 2.5rem; /* MODIFICADO: Espacio inferior */
+}
+
+.login-center h2 {
+  font-size: 2.4rem; /* MODIFICADO: Tamaño ajustado */
+  color: #e0e0e0; /* MODIFICADO: Color claro */
+  font-weight: 700; /* MODIFICADO: Más peso */
+  margin-bottom: 1rem; /* MODIFICADO: Espacio ajustado */
+}
+
+.login-center p {
+  font-size: 1.4rem; /* MODIFICADO: Tamaño ajustado */
+  font-weight: 400;
+  color: #bdbdbd; /* MODIFICADO: Color gris claro */
+  margin-bottom: 0; /* MODIFICADO: Quitado margen inferior aquí */
+}
+
+/* Inputs del Formulario */
+form input[type='email'],
+form input[type='password'],
+form input[type='text'] {
+  width: 100%;
+  /* MODIFICADO: Estilo de input oscuro */
+  padding: 1.4rem 1.5rem; /* Padding ajustado */
+  margin-bottom: 1.5rem; /* Espacio ajustado */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 1.5rem; /* Tamaño ajustado */
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type='email']:focus,
+form input[type='password']:focus,
+form input[type='text']:focus {
+  /* MODIFICADO: Estilo de foco oscuro */
+  border-color: #f0c419;
+  background-color: #2a2a2a; /* Mantiene el fondo */
+  box-shadow: 0 0 0 3px rgba(240, 196, 25, 0.15);
+}
+
+/* Icono de Ojo en Contraseña */
+.pass-input-div {
+  position: relative;
+}
+
+.pass-input-div svg {
+  font-size: 2rem; /* MODIFICADO: Ligeramente más grande */
+  position: absolute;
+  right: 15px; /* MODIFICADO: Ajustado */
+  top: 50%; /* AÑADIDO: Para centrar verticalmente */
+  transform: translateY(-50%); /* AÑADIDO: Para centrar verticalmente */
+  cursor: pointer;
+  color: #888; /* MODIFICADO: Color gris */
+}
+
+/* Botón Principal (Submit/Login) */
+/* Asumiendo que es button[type='submit'] o similar, ajusta si es necesario */
+form button[type='submit'], /* MODIFICADO: Selector más probable */
+form button[type='button'].primary-login-button { /* O añade una clase */
+  width: 100%;
+  /* MODIFICADO: Estilo botón primario amarillo */
+  padding: 1.4rem 1.8rem;
+  border: none;
+  border-radius: 8px; /* MODIFICADO: Radio estándar */
+  font-size: 1.6rem; /* Tamaño ajustado */
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(45deg, #f0c419, #e0ac00);
+  color: #121212; /* Texto oscuro */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(240, 196, 25, 0.2);
+}
+
+form button[type='submit']:hover,
+form button[type='button'].primary-login-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(240, 196, 25, 0.3);
+  filter: brightness(1.1);
+}
+
+/* Opciones (Recordarme, Olvidó Contraseña) */
+.login-center-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* AÑADIDO: Alinea verticalmente */
+  margin: 1.5rem 0 2rem 0; /* MODIFICADO: Espaciado */
+}
+
+.remember-div {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* MODIFICADO: Espacio */
+}
+
+.remember-div label {
+  font-size: 1.4rem; /* Tamaño ajustado */
+  color: #bdbdbd; /* Color claro */
+  font-weight: 500;
+  cursor: pointer;
+}
+/* Considera estilizar el checkbox real */
+.remember-div input[type="checkbox"] {
+  /* ... estilos personalizados para checkbox ... */
+  accent-color: #f0c419; /* Color de acento para el check */
+}
+
+
+.forgot-pass-link {
+  font-size: 1.4rem; /* Tamaño ajustado */
+  color: #f0c419; /* MODIFICADO: Color de acento */
+  text-decoration: none;
+  font-weight: 500; /* AÑADIDO */
+}
+
+.forgot-pass-link:hover {
+  text-decoration: underline;
+  filter: brightness(1.1); /* AÑADIDO */
+}
+
+/* Botones Alternativos (Google, etc.) */
+.login-center-buttons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem; /* Espacio */
+  margin-top: 2rem; /* Espacio superior */
+}
+
+/* Estilo base para botones alternativos */
+.login-center-buttons button {
+  width: 100%;
+  padding: 1.2rem; /* Padding ajustado */
+  border-radius: 8px; /* Radio estándar */
+  font-size: 1.5rem; /* Tamaño ajustado */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem; /* Espacio para icono */
+}
+
+/* Botón Alternativo 1 (Ej: Bordeado Oscuro) */
+.login-center-buttons button:nth-child(1) {
+  background-color: transparent; /* MODIFICADO */
+  color: #e0e0e0; /* MODIFICADO */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* MODIFICADO */
+}
+
+.login-center-buttons button:nth-child(1):hover {
+  background-color: rgba(255, 255, 255, 0.05); /* MODIFICADO */
+  border-color: rgba(255, 255, 255, 0.5); /* MODIFICADO */
+  color: #fff;
+}
+
+/* Botón Alternativo 2 (Ej: Google - Fondo Claro) */
+.login-center-buttons button:nth-child(2) {
+  background-color: #f0f0f0; /* Mantenido */
+  color: #333; /* Texto oscuro */
+  border: none; /* Sin borde */
+}
+
+.login-center-buttons button:nth-child(2) img {
+  width: 25px; /* MODIFICADO: Ajustado */
+}
+
+.login-center-buttons button:nth-child(2):hover {
+  background-color: #e0e0e0; /* MODIFICADO: Hover más oscuro */
+}
+
+/* Texto inferior (Registrarse) */
+.login-bottom-p {
+  text-align: center;
+  font-size: 1.5rem; /* MODIFICADO */
+  color: #bdbdbd; /* MODIFICADO */
+  padding: 2.5rem 0 0 0; /* MODIFICADO: Solo padding superior */
+}
+
+.login-bottom-p a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #f0c419; /* MODIFICADO: Color acento */
+}
+
+.login-bottom-p a:hover {
+  text-decoration: underline;
+  filter: brightness(1.1);
+}
