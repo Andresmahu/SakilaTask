@@ -1,88 +1,150 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/module_rental_form.css";
+import "../styles/module_rental_form.css"; // Asegúrate que la ruta al CSS es correcta
 
-// Retrieve the backend host from environment variables.
 const backend = import.meta.env.VITE_BACKEND_HOST;
 
 const RentalMovie = () => {
-  // Hook for programmatic navigation.
   const navigate = useNavigate();
-
-  // Hook for accessing the current location and state.
   const location = useLocation();
+  // Extrae los datos necesarios pasados desde MovieDetail
+  const { film_id, store_id, title } = location.state || {};
 
-  // Extract movie details passed from the previous page.
-  const { inventory_id, customer_id, staff_id } = location.state || {};
-
-  // State variables for rental date, return date, loading state, and errors.
-  const [rentalDate, setRentalDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  const [staffId, setStaffId] = useState(1);
 
-  // Retrieve user information from local storage.
-  const user = JSON.parse(localStorage.getItem("loginResponse"));
-
-  // Function to handle the rental process.
-  const handleRent = async () => {
-    // Check if both rental and return dates are selected.
-    if (!rentalDate || !returnDate) {
-      setError("Selecciona ambas fechas."); // Select both dates.
-      return;
+  useEffect(() => {
+    // Carga datos del usuario desde localStorage
+    const storedUser = localStorage.getItem("loginResponse");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        // Valida que el usuario parseado y su ID existan
+        if (parsedUser?.customer_id) {
+          setUser(parsedUser);
+        } else {
+          setError("Datos del cliente inválidos en el almacenamiento local.");
+        }
+      } catch (parseError) {
+        console.error("Error parsing user from localStorage:", parseError);
+        setError("Error al leer los datos del usuario.");
+        // Opcional: limpiar localStorage si está corrupto
+        // localStorage.removeItem("loginResponse");
+      }
+    } else {
+      setError("Usuario no autenticado. Por favor, inicie sesión.");
+      // Opcional: redirigir a login si es necesario
+      // navigate('/login');
     }
 
-    // Set loading to true and clear any previous errors.
+    // Valida que se recibieron film_id y store_id
+    if (!film_id || !store_id) {
+      setError("No se recibió la información necesaria de la película o tienda. Regrese e intente de nuevo.");
+    }
+  }, [film_id, store_id]); // Dependencias del useEffect
+
+  const handleRent = async () => {
+    // Validación final antes de enviar la solicitud
+    if (!user?.customer_id || !film_id || !store_id || !staffId) {
+      // Actualiza el error si aún no está establecido por el useEffect
+      if (!error) {
+        setError("Faltan datos esenciales para la renta (Usuario, Película, Tienda o Staff).");
+      }
+      return; // No continuar si faltan datos
+    }
+
     setLoading(true);
-    setError(null);
+    setError(null); // Limpiar errores previos antes de intentar
+
+    // --- Define el payload que espera el backend ---
+    const payload = {
+      film_id: film_id,
+      store_id: store_id,
+      customer_id: parseInt(user.customer_id), // Asegurar que sea número
+      staff_id: staffId, // Usar el ID de staff (actualmente placeholder 1)
+      rental_date: new Date().toISOString(), // Añadir fecha actual requerida por el backend
+      return_date: null // Enviar null explícitamente (coincide con Optional[datetime]=None)
+    };
+
+    console.log("Enviando payload a /createRental:", payload); // Log para depuración
 
     try {
-      // Send a POST request to the backend to create a rental.
-      await axios.post(`${backend}/rentals/createRental`, {
-        rental_date: new Date(rentalDate).toISOString(),
-        inventory_id: 1, // Using 1 as inventory ID based on the original code.
-        customer_id: parseInt(user.customer_id),
-        return_date: new Date(returnDate).toISOString(),
-        staff_id: 1, // Using 1 as staff ID based on the original code.
-      });
+      // Enviar la solicitud POST al backend
+      const response = await axios.post(`${backend}/rentals/createRental/`, payload);
 
-      // Display a success message and navigate back two pages.
-      alert("Película rentada con éxito."); // Movie rented successfully.
-      navigate(-2); // Navigate back to MovieDetail
+      // --- Manejo de respuesta exitosa ---
+      // Usa el mensaje y rental_id que SÍ devuelve el backend
+      alert(`${response.data.message}\nID de Renta: ${response.data.rental_id}`);
+      // Navegar a la lista de películas (asegúrate que '/MovieList' es la ruta correcta)
+      navigate('/MovieList');
+
     } catch (err) {
-      // Log the dates in ISO format for debugging.
-      console.log(new Date(rentalDate).toISOString());
-      console.log(new Date(returnDate).toISOString());
+      // --- Manejo de errores ---
+      console.error("Error al intentar rentar:", err);
+      const status = err.response?.status;
+      const detail = err.response?.data?.detail;
+      let errorMessage = `Error ${status || ''}: No se pudo procesar la renta.`; // Mensaje por defecto
 
-      // Set an error message if the rental process fails.
-      setError("Error al procesar la renta."); // Error processing rental.
+      if (typeof detail === "string") {
+        // Si el backend envía un mensaje de error claro (ej. 404 de disponibilidad)
+        errorMessage = detail;
+      } else if (Array.isArray(detail)) {
+         // Si el backend envía errores de validación Pydantic (ej. 422)
+        try {
+             errorMessage = detail.map(e => `${e.loc?.[1] || 'Campo'}: ${e.msg}`).join('; ');
+        } catch(e){ console.error("Error parsing detail array", e)}
+
+      } else if (err.request) {
+        // Si no hubo respuesta del servidor
+        errorMessage = "No se pudo conectar con el servidor. Verifique su conexión.";
+      } else {
+         // Otro tipo de error
+        errorMessage = err.message || "Ocurrió un error inesperado.";
+      }
+       setError(errorMessage);
     } finally {
-      // Set loading to false regardless of success or failure.
       setLoading(false);
     }
   };
 
+  // Lógica para deshabilitar el botón
+  const isRentDisabled = loading || !!error || !user?.customer_id || !film_id || !store_id || !staffId;
+
   return (
     <div className="rental-form">
-      {/* Back button */}
-      <button onClick={() => navigate(-1)} className="back-button">⬅ Volver</button> {/* ⬅ Back */}
+      <button onClick={() => navigate(-1)} className="back-button" aria-label="Volver">
+        ⬅ Volver
+      </button>
 
-      <h2>Selecciona las fechas de renta</h2> {/* Select rental dates */}
+      <h2>Confirmar Renta</h2>
 
-      <label>Fecha de renta:</label> {/* Rental date */}
-      <input type="date" value={rentalDate} onChange={(e) => setRentalDate(e.target.value)} />
+      {/* Mostrar detalles para confirmación */}
+      {title && <p className="confirmation-detail">Película: <strong>{title}</strong></p>}
+      {store_id && <p className="confirmation-detail">Tienda ID: <strong>{store_id}</strong></p>}
+      {user?.customer_id && <p className="confirmation-detail">Cliente ID: <strong>{user.customer_id}</strong></p>}
+      {/* Podrías añadir el Staff ID si fuera relevante mostrarlo */}
+      {/* {staffId && <p className="confirmation-detail">Staff ID: <strong>{staffId}</strong></p>} */}
 
-      <label>Fecha de devolución:</label> {/* Return date */}
-      <input type="date" value={returnDate} onChange={(e) => setReturnDate(e.target.value)} />
-
-      {error && <p className="error">{error}</p>}
+      {/* Mostrar el mensaje de error */}
+      {error && (
+        <div className="error-message"> {/* Usa una clase para estilizar el error */}
+          <strong>Error:</strong> {error}
+        </div>
+      )}
 
       <div className="buttons">
-        <button onClick={handleRent} disabled={loading}>
-          {loading ? "Procesando..." : "Confirmar Renta"} {/* Processing... : Confirm Rental */}
+        <button onClick={handleRent} disabled={isRentDisabled}>
+          {loading ? "Procesando..." : "Confirmar Renta"}
         </button>
       </div>
+
+
+      {!error && !loading && !isRentDisabled && (
+        <p className="info-text">Al confirmar, se registrará la renta con la fecha y hora actuales.</p>
+      )}
     </div>
   );
 };

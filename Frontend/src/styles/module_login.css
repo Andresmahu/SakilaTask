@@ -9,8 +9,9 @@ html {
   font-size: 62.5%;
 }
 
-/* --- MODIFICADO: Body ahora centra el contenido --- */
-body {
+
+/* AÑADE ESTO: */
+.loginContainer { /* O el nombre que prefieras */
   font-family: 'Poppins', sans-serif;
   background-color: #121212; /* Fondo oscuro estándar */
   color: #e0e0e0; /* Texto claro estándar */

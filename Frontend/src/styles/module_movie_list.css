@@ -1,4 +1,6 @@
-/* Importa la fuente Poppins (asegúrate de tenerla en tu HTML o CSS) */
+/* styles/module_movie_list.css */
+
+/* Importa la fuente Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 body {
@@ -12,40 +14,122 @@ body {
 
 /* Contenedor principal del catálogo */
 .movie-catalog {
-  max-width: 1100px; /* Puedes ajustar esto si es necesario */
-  margin: 2rem auto 3rem auto;
-  padding: 0 1.5rem;
-  /* Considera añadir un fondo si quieres delimitar visualmente esta área */
-  /* background-color: rgba(0, 0, 0, 0.1); */
-  /* border-radius: 15px; */
+  /*max-width: 1100px; /* Puedes ajustar esto si es necesario */
+  margin: 0;
+  padding: 0;
 }
 
-/* Barra superior (Header) */
+/* Barra superior (Header) - MODIFIED */
 .top-bar {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  align-items: center; /* Alinea verticalmente los ítems */
+  gap: 1rem; /* Espacio entre los elementos dentro de la barra */
   padding: 1rem 1.5rem;
-  /* Hacemos el fondo transparente o semi-transparente para que se vea el azul del body */
   background: rgba(0, 0, 0, 0.2); /* Fondo oscuro semi-transparente */
-  /* O quitar el fondo si prefieres */
-  /* background: none; */
-  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); */ /* Opcional con fondo transparente */
-  margin-bottom: 1.5rem; /* Añadido: Espacio debajo de la barra superior */
+
+  flex-wrap: wrap;
 }
 
-/* Botón de cerrar sesión (Logout) */
+
+
+
+.search-input {
+  flex-grow: 1;
+  min-width: 200px;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+.search-input:focus {
+  border-color: #f0c419;
+  box-shadow: 0 0 0 3px rgba(240, 196, 25, 0.15);
+}
+
+/* Botón de Búsqueda (Estilos adaptados del original .search-bar button) */
+.search-button { /* Clase asignada en el JSX */
+  background: linear-gradient(45deg, #f0c419, #e0ac00);
+  border: none;
+  padding: 1rem 1.8rem; /* Asegura que la altura coincida con el input */
+  border-radius: 8px;
+  cursor: pointer;
+  color: #121212;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(240, 196, 25, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Evita que el botón se encoja */
+}
+
+.search-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(240, 196, 25, 0.3);
+  filter: brightness(1.1);
+}
+
+.search-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(240, 196, 25, 0.2);
+  filter: brightness(0.9);
+}
+
+/* Selector de Tienda (NUEVOS ESTILOS) */
+.store-select { /* Clase asignada en el JSX */
+  padding: 1rem 1.5rem; /* Coincide con el padding vertical del input */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: #2a2a2a; /* Coincide con el fondo del input */
+  color: #e0e0e0; /* Coincide con el color de texto del input */
+  font-size: 1.1rem; /* Coincide con el tamaño de fuente del input */
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  min-width: 150px; /* Ancho base */
+  flex-shrink: 0; /* Evita que el selector se encoja */
+  /* Apariencia estándar para consistencia entre navegadores */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* Flecha desplegable personalizada (SVG incrustado) */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center; /* Posiciona la flecha a la derecha */
+  padding-right: 3rem; /* Añade espacio a la derecha para que el texto no se solape con la flecha */
+}
+
+.store-select:focus {
+  border-color: #f0c419; /* Coincide con el foco del input */
+  box-shadow: 0 0 0 3px rgba(240, 196, 25, 0.15); /* Coincide con el foco del input */
+}
+
+
+/* Botón de cerrar sesión (Logout) - MODIFIED */
 .logout-button {
   background: linear-gradient(45deg, #e74c3c, #c0392b);
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem; /* MODIFICADO: Más padding */
+  padding: 0.8rem 1.5rem;
   cursor: pointer;
   border-radius: 8px;
-  font-size: 1rem; /* MODIFICADO: Fuente más grande */
+  font-size: 1rem;
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+  margin-left: auto; /* Empuja el botón al extremo derecho */
+  flex-shrink: 0; /* Evita que el botón se encoja */
 }
 
 .logout-button:hover {
@@ -59,76 +143,15 @@ body {
   box-shadow: 0 2px 8px rgba(231, 76, 60, 0.2);
 }
 
-/* Barra de búsqueda */
-.search-bar {
-  display: flex;
-  gap: 1rem;
-  max-width: 750px;       /* AÑADIDO: Limita el ancho máximo de la barra */
-  margin: 2.5rem auto;    /* MODIFICADO: Más margen vertical y centrado horizontal */
-}
+/* --- Fin de estilos para elementos dentro de .top-bar --- */
 
-.search-bar input {
-  flex: 1;
-  padding: 1rem 1.5rem;   /* MODIFICADO: Más padding */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-  font-size: 1.1rem;      /* MODIFICADO: Fuente más grande */
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-bar input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
-
-.search-bar input:focus {
-  border-color: #f0c419;
-  box-shadow: 0 0 0 3px rgba(240, 196, 25, 0.15);
-}
-
-.search-bar button {
-  background: linear-gradient(45deg, #f0c419, #e0ac00);
-  border: none;
-  padding: 1rem 1.8rem;   /* MODIFICADO: Más padding (igual al vertical del input) */
-  border-radius: 8px;
-  cursor: pointer;
-  color: #121212;
-  font-weight: 600;
-  font-size: 1.1rem;      /* MODIFICADO: Fuente más grande */
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(240, 196, 25, 0.2);
-  display: flex;          /* AÑADIDO: Para centrar ícono si lo pones */
-  align-items: center;    /* AÑADIDO: Para centrar ícono si lo pones */
-  justify-content: center;/* AÑADIDO: Para centrar ícono si lo pones */
-}
-/* Si usas un ícono (ej. SVG o Font Awesome) dentro del botón: */
-/* .search-bar button svg { */
-/* width: 1.2em; */ /* Ajusta tamaño del ícono */
-/* height: 1.2em; */
-/* } */
-
-
-.search-bar button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(240, 196, 25, 0.3);
-  filter: brightness(1.1);
-}
-
-.search-bar button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(240, 196, 25, 0.2);
-  filter: brightness(0.9);
-}
 
 /* Lista de películas (Grid) - SIN CAMBIOS */
 .movie-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.8rem;
-  margin-top: 2rem;
+  /* margin-top no es necesario si .top-bar tiene margin-bottom */
 }
 
 /* Tarjetas de película individuales - SIN CAMBIOS */
@@ -150,14 +173,7 @@ body {
   border-color: rgba(240, 196, 25, 0.4);
 }
 
-/* Estilos para el contenido DENTRO de la tarjeta (Ejemplos) - SIN CAMBIOS */
-.movie-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  display: block;
-}
+/* Estilos para el contenido DENTRO de la tarjeta - SIN CAMBIOS */
 .movie-card h3 {
   margin: 0 0 0.5rem 0;
   color: #f0c419;
@@ -170,8 +186,8 @@ body {
   margin: 0;
 }
 
-/* Indicadores de carga y error - SIN CAMBIOS */
-.loading, .error {
+/* Indicadores de carga, error y sin resultados - MODIFIED */
+.loading, .error, .no-results { /* Añadido .no-results */
   text-align: center;
   font-size: 1.1rem;
   padding: 1.5rem;
@@ -189,4 +205,64 @@ body {
   color: #ff6b6b;
   background-color: rgba(255, 107, 107, 0.1);
   border: 1px solid rgba(255, 107, 107, 0.2);
+}
+.no-results { /* Estilo para el mensaje de "sin resultados" */
+  color: #adb5bd; /* Gris claro */
+  background-color: rgba(173, 181, 189, 0.1);
+  border: 1px solid rgba(173, 181, 189, 0.2);
+}
+
+
+/* --- Ajustes Responsivos --- */
+@media (max-width: 768px) {
+  .top-bar {
+    gap: 0.8rem; /* Reduce el espacio entre elementos */
+  }
+
+  .search-input {
+    min-width: 150px; /* Ajusta el ancho mínimo */
+  }
+  .store-select {
+      min-width: 120px; /* Ajusta el ancho mínimo */
+      padding: 1rem 1rem; /* Ajusta padding si es necesario */
+      padding-right: 2.5rem; /* Asegura espacio para la flecha */
+      font-size: 1rem; /* Reduce fuente si es necesario */
+  }
+   .search-button {
+       padding: 1rem 1.2rem; /* Ajusta padding */
+       font-size: 1rem; /* Reduce fuente si es necesario */
+   }
+  .logout-button {
+      margin-left: 0; /* Quita el margen automático si los elementos se envuelven */
+      /* Ajusta tamaño para pantallas más pequeñas */
+      padding: 0.7rem 1.2rem;
+      font-size: 0.9rem;
+  }
+  /* Considera agrupar input/select/search en un div si quieres que el logout siempre esté a la derecha incluso al envolver */
+}
+
+@media (max-width: 550px) {
+    /* En pantallas muy pequeñas, podrías decidir apilar los elementos si prefieres */
+    /* .top-bar {
+      flex-direction: column;
+      align-items: stretch;
+    } */
+     .search-input,
+     .store-select,
+     .search-button,
+     .logout-button {
+         font-size: 1rem; /* Asegura un tamaño de fuente legible */
+         width: 100%;
+         margin-bottom: 0.5rem; /* Espacio si se apilan */
+         margin-left: 0; /* Resetea márgenes */
+         text-align: center; /* Centra texto/iconos si se apilan */
+     }
+     .logout-button {
+         margin-bottom: 0;
+     }
+     .store-select {
+         background-position: right 0.5rem center; /* Ajusta posición de flecha si se encoge */
+         padding-right: 2rem;
+     }
+     /* Si no se apilan, los ajustes de 768px pueden ser suficientes */
 }

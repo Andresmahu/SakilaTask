@@ -61,6 +61,7 @@ const Login = () => {
   };
 
   return (
+<div className="loginContainer">
     <div className="login-main">
       <div className="login-left">
         <img src={Logo} alt="Fondo" />
@@ -111,6 +112,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+</div>
   );
 };
 

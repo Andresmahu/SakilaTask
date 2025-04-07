@@ -1,82 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/module_movie_list.css'
 
-// Retrieve the backend host from environment variables.
 const backend = import.meta.env.VITE_BACKEND_HOST;
 
 const MovieList = () => {
-  // State variables for search term, movies, loading state, and errors.
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedStoreId, setSelectedStoreId] = useState('1');
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Hook for programmatic navigation.
   const navigate = useNavigate();
 
-  // Function to handle the movie search.
-  const handleSearch = async () => {
-    // Return early if the search term is empty.
-    if (!searchTerm) return;
+  const storeOptions = [
+    { id: '1', name: 'Tienda 1' },
+    { id: '2', name: 'Tienda 2' },
+  ];
 
-    // Set loading to true and clear any previous errors.
+  const handleSearch = async () => {
+    if (!searchTerm || !selectedStoreId) {
+        setMovies([]);
+        return;
+    }
     setLoading(true);
     setError(null);
-
     try {
-      // Send a POST request to the backend search endpoint.
       const response = await axios.post(`${backend}/films/filmSearch`, {
         search_req: searchTerm,
+        store_id: selectedStoreId,
       });
-
-      // Update the movies state with the search results.
       setMovies(response.data);
     } catch (err) {
-      // Set an error message if the search fails.
-      setError("Error al obtener las películas"); // Error getting movies
+      console.error("Search error:", err);
+      setError("Error al obtener las películas para la tienda seleccionada.");
     } finally {
-      // Set loading to false regardless of success or failure.
       setLoading(false);
     }
   };
 
-  // Function to handle logout.
   const handleLogout = () => {
-    // Clear all items from local storage.
     localStorage.clear();
-
-    // Redirect to the login page.
     navigate("/");
   };
 
   return (
     <div className="movie-catalog">
       <div className="top-bar">
-        <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button> {/* Logout */}
-      </div>
-      <div className="search-bar">
         <input
           type="text"
-          placeholder="Buscar película..." // Search movie...
+          placeholder="Buscar película..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+          onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
         />
-        <button onClick={handleSearch}>
+        <button onClick={handleSearch} className="search-button">
           <FaSearch />
         </button>
+        <select
+          value={selectedStoreId}
+          onChange={(e) => setSelectedStoreId(e.target.value)}
+          className="store-select"
+        >
+          {storeOptions.map((store) => (
+            <option key={store.id} value={store.id}>
+              {store.name}
+            </option>
+          ))}
+        </select>
+        <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button>
       </div>
 
-      {loading && <p className="loading">Cargando...</p>} {/* Loading... */}
+      {loading && <p className="loading">Cargando...</p>}
       {error && <p className="error">{error}</p>}
 
       <div className="movie-list">
         {movies.map((movie) => (
-          <Link to={`/movie/${movie.film_id}`} key={movie.film_id} className="movie-card">
+          <Link
+             to={`/movie/${movie.film_id}`}
+             key={movie.film_id}
+             className="movie-card"
+             // 👇 Añade esta línea para pasar el state
+             state={{ store_id: selectedStoreId }}
+           >
             <h3>{movie.title}</h3>
-            <p>{movie.description}</p>
+            {movie.description && <p>{movie.description}</p>}
           </Link>
         ))}
       </div>
